@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedidos</title>
+</head>
+<body>
+<h1>Pedidos</h1>
+
+<form method="get" action="/pedidos">
+    Busca por descrição: <input type="text" name="q" th:value="${q}" />
+    <button type="submit">Pesquisar</button>
+    <a href="/pedidos">Limpar</a>
+</form>
+
+<a href="/pedidos/novo">Novo Pedido</a>
+<table border="1">
+    <tr><th>ID</th><th>Cliente</th><th>Descrição</th><th>Valor</th><th>Data</th><th>Produtos</th><th>Ações</th></tr>
+    <tr th:each="p : ${pedidos}">
+        <td th:text="${p.id}">1</td>
+        <td th:text="${p.cliente != null ? p.cliente.nome : '—'}">Cliente</td>
+        <td th:text="${p.descricao}">Desc</td>
+        <td th:text="${p.valorTotal}">0.0</td>
+        <td th:text="${p.data}">2025-01-01</td>
+        <td>
+    <span th:each="prod, iStat : ${p.produtos}">
+        <span th:text="${prod.nome}"></span>
+        <span th:if="${!iStat.last}">, </span>
+    </span>
+</td>
+
+        <td>
+            <a th:href="@{|/pedidos/editar/${p.id}|}">Editar</a>
+            <a th:href="@{|/pedidos/excluir/${p.id}|}" onclick="return confirm('Excluir?')">Excluir</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

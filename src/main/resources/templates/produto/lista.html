@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Produtos</title>
+</head>
+<body>
+<h1>Produtos</h1>
+
+<form method="get" action="/produtos">
+    Busca por nome: <input type="text" name="q" th:value="${q}" />
+    <button type="submit">Pesquisar</button>
+    <a href="/produtos">Limpar</a>
+</form>
+
+<a href="/produtos/novo">Novo Produto</a>
+<table border="1">
+    <tr><th>ID</th><th>Nome</th><th>Preço</th><th>Estoque</th><th>Ações</th></tr>
+    <tr th:each="p : ${produtos}">
+        <td th:text="${p.id}">1</td>
+        <td th:text="${p.nome}">Nome</td>
+        <td th:text="${p.preco}">0.0</td>
+        <td th:text="${p.estoque}">0</td>
+        <td>
+            <a th:href="@{|/produtos/editar/${p.id}|}">Editar</a>
+            <a th:href="@{|/produtos/excluir/${p.id}|}" onclick="return confirm('Excluir?')">Excluir</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

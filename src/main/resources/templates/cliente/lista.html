@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Clientes</title>
+</head>
+<body>
+<h1>Clientes</h1>
+
+<form method="get" action="/clientes">
+    Busca por nome: <input type="text" name="q" th:value="${q}" />
+    <button type="submit">Pesquisar</button>
+    <a href="/clientes">Limpar</a>
+</form>
+
+<a href="/clientes/novo">Novo Cliente</a>
+<table border="1">
+    <tr><th>ID</th><th>Nome</th><th>Email</th><th>Telefone</th><th>Ações</th></tr>
+    <tr th:each="c : ${clientes}">
+        <td th:text="${c.id}">1</td>
+        <td th:text="${c.nome}">Nome</td>
+        <td th:text="${c.email}">email</td>
+        <td th:text="${c.telefone}">tel</td>
+        <td>
+            <a th:href="@{|/clientes/editar/${c.id}|}">Editar</a>
+            <a th:href="@{|/clientes/excluir/${c.id}|}" onclick="return confirm('Excluir?')">Excluir</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
